@@ -15,6 +15,13 @@
     </tr>
     </thead>
     <tbody>
+    <form th:action="@{/save}" th:method="post">
+     Emp No: <input type="number" name="empNo">
+        Emp Name: <input type="text" name="empName">
+        Designation: <input type="text" name="designation">
+        Email: <input type="email" name="email">
+        <button type="submit">Save</button>
+    </form>
     <tr th:each="user:${user}">
         <td th:text="${user.empNo}"></td>
         <td th:text="${user.empName}"></td>
