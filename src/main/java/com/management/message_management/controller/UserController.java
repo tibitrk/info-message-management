@@ -1,6 +1,7 @@
 package com.management.message_management.controller;
 
 import com.management.message_management.model.User;
+import com.management.message_management.service.KafkaProducerService;
 import com.management.message_management.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
 
     @GetMapping("/home")
     public String getAllUsers(Model model){
@@ -39,6 +43,10 @@ public class UserController {
         user.setDesignation(designation);
         user.setEmail(email);
         userService.saveUser(user);
+
+        String message= "New user added: " + empName + " (Designation: " + designation + ", Email: " + email + ")";
+        kafkaProducerService.sendMessage(message);
+        
         return "redirect:/home";
     }
 }
