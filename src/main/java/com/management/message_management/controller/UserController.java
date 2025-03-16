@@ -44,8 +44,8 @@ public class UserController {
         user.setEmail(email);
         userService.saveUser(user);
 
-        String message= "New user added: " + empName + " (Designation: " + designation + ", Email: " + email + ")";
-        kafkaProducerService.sendMessage(message);
+
+        kafkaProducerService.sendMessage(email);
         
         return "redirect:/home";
     }
